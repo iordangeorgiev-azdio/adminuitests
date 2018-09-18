@@ -3,12 +3,15 @@ package com.azdio.adminui.vod;
 import java.util.Arrays;
 
 import com.azdio.adminui.BrowserExtensions;
+import com.azdio.adminui.CommonMethods;
+import com.azdio.adminui.Config;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
-import com.azdio.adminui.CommonMethods;
-import com.azdio.adminui.Config;
 
+import org.junit.runners.MethodSorters;
+
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class VODAssetTests extends BrowserExtensions {
 
     CommonMethods commonHelperMethods = new CommonMethods();
@@ -98,6 +101,7 @@ public class VODAssetTests extends BrowserExtensions {
         commonHelperMethods.ToolbarButtonClick("Edit VOD Asset");
 
         commonHelperMethods.fillRowInfo("Name", "Edit " + assetName);
+        commonHelperMethods.openDropdown("Content Type");
         commonHelperMethods.selectAnELementFromDropdown("EPISODE");
         // Save info
         commonHelperMethods.ToolbarButtonClick("Save");
@@ -108,7 +112,7 @@ public class VODAssetTests extends BrowserExtensions {
 
 
     @Test
-    public void P03deleteVODAsset() {
+    public void v03deleteVODAsset() {
 
         // Navigation to the page
         commonHelperMethods.leftPanelNavigation("VOD");

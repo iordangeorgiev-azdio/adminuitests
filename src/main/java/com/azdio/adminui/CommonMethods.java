@@ -10,6 +10,8 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 
+import static java.lang.Thread.sleep;
+
 public class CommonMethods extends BrowserExtensions {
 
     CommonWebElements elements = new CommonWebElements();
@@ -34,6 +36,11 @@ public class CommonMethods extends BrowserExtensions {
     public void ToolbarButtonClick(String buttonName) {
         WebElement buttoAt = driver.findElement(By.xpath(" //div[@id='cdk-describedby-message-container']/*[normalize-space(text()) = '" + buttonName + "']"));
         String buttonAttribute = buttoAt.getAttribute("id").toString();
+        try {
+            Thread.sleep(300);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         WebElement button = driver.findElement(By.xpath("//*[@aria-describedby='" + buttonAttribute + "']"));
         waitToBeClickable(button);
         button.click();
@@ -45,6 +52,10 @@ public class CommonMethods extends BrowserExtensions {
         WebElement openSearchDropdownButton = driver.findElement(By.xpath("(//*[contains(@class, 'mat-expansion-indicator ng')])[1]"));
         waitToBeClickable(openSearchDropdownButton);
         openSearchDropdownButton.click();
+        try {
+            sleep(200);
+        } catch (InterruptedException e) {
+        }
         ToolbarButtonClick(propertyName);
     }
 
@@ -52,7 +63,7 @@ public class CommonMethods extends BrowserExtensions {
         WebElement searchField = driver.findElement(By.xpath("//input[@placeholder]"));
         waitToBeClickable(searchField);
         try {
-            Thread.sleep(200);
+            sleep(200);
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -74,7 +85,7 @@ public class CommonMethods extends BrowserExtensions {
 
     public void searchForItem(String searchValue) {
         try {
-            Thread.sleep(200);
+            sleep(200);
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -85,7 +96,7 @@ public class CommonMethods extends BrowserExtensions {
         element.sendKeys(searchValue);
         // waitForElements(elements.dropdownElements(),5);
         try {
-            Thread.sleep(600);
+            sleep(600);
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -97,7 +108,7 @@ public class CommonMethods extends BrowserExtensions {
     public void selectAnELementFromDropdown(String values) {
 
         try {
-            Thread.sleep(200);
+            sleep(200);
         } catch (Exception e) {
         }
         List<WebElement> list = driver.findElements(elements.dropdownElements());
@@ -226,7 +237,7 @@ public class CommonMethods extends BrowserExtensions {
         Integer size = 0;
 
         try {
-            Thread.sleep(1000);
+            sleep(2000);
             elements = driver.findElements(By.xpath("//div[@class='ht_master handsontable']//tbody/tr"));
         } catch (Exception e) {
 

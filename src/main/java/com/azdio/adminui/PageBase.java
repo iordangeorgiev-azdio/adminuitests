@@ -1,6 +1,8 @@
 package com.azdio.adminui;
 
 import java.util.concurrent.TimeUnit;
+
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.*;
@@ -10,8 +12,8 @@ public abstract class PageBase {
 
     public static WebDriver driver;
 
-    @BeforeClass
-    public  static void openBrowser() {
+    @Before
+    public   void openBrowser() {
         Config config = new Config();
 
         String browser = config.getConfigProperty("browser");
