@@ -16,17 +16,21 @@ public class CommonWebElements extends BrowserExtensions{
         return By.xpath(".//div[@class='ss-list']/div");
     }
 
-    public WebElement gridFirstRow(Integer elementIndex) {
+    public WebElement gridRow(Integer elementIndex, Integer rowNumber) {
         List<WebElement> elements;
         WebElement element = null;
         try {
-                elements =driver.findElements(By.xpath("(//div[@class='ht_master handsontable']//tbody/tr)[1]/td"));
+                elements =driver.findElements(By.xpath("(//div[@class='ht_master handsontable']//tbody/tr)["+rowNumber+"]/td"));
                 element = elements.get(elementIndex);
         } catch (Exception e) {
 
         }
         return element;
     }
+    public List<WebElement> gridRows(){
+        return driver.findElements(By.xpath("//div[@class='ht_master handsontable']//tbody/tr"));
+    }
+
 
     public WebElement rowForInput(Integer elementIndex) {
         List<WebElement> elements = driver.findElements(By.xpath("//div[@class='ht_master handsontable']//tbody//td"));
@@ -52,6 +56,15 @@ public class CommonWebElements extends BrowserExtensions{
     public WebElement spinner(){
        return driver.findElement(By.className("loading-spinner"));
     }
+
+    public WebElement tvSeriesExpand(){
+        return driver.findElement(By.xpath("(//*[contains(@class,'ht_nestingLevels')]//*[contains(@class,'ht_nestingButton')])[1]"));
+    }
+
+    public WebElement tvSeriesExpandCell() { return driver.findElement(By.xpath("//div[@class='ht_clone_left handsontable']//*[contains(@class,'ht_nestingLevels')]"));
+
+    }
+
 
 
 }
