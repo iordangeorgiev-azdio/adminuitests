@@ -34,8 +34,20 @@ public class BrowserExtensions extends PageBase {
         wait2.until(ExpectedConditions.elementToBeClickable(element));
         JavascriptExecutor jse2 = (JavascriptExecutor) driver;
         jse2.executeScript("arguments[0].scrollIntoView()", element);
-    }
+        waitForSpinner();
 
+    }
+    public void waitForSpinner(){
+        CommonWebElements elements = new CommonWebElements();
+        String att = elements.spinner().getAttribute("style");
+        while(elements.spinner().getAttribute("style").equals("block")){
+            try {
+                Thread.sleep(50);
+            } catch (Exception e2) {
+            }
+        }
+
+    }
     public Integer waitForElements(By element, Integer seconds) {
         Integer timer = 0;
         Integer temp = 0;
@@ -47,7 +59,7 @@ public class BrowserExtensions extends PageBase {
 
                 try {
                     Thread.sleep(100);
-                } catch (InterruptedException e2) {
+                } catch (Exception e2) {
                 }
 
                 temp++;

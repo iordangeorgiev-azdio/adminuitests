@@ -16,19 +16,19 @@ public class CommonWebElements extends BrowserExtensions{
         return By.xpath(".//div[@class='ss-list']/div");
     }
 
-    public WebElement gridFirstRow(String elementName, Integer elementIndex) {
+    public WebElement gridFirstRow(Integer elementIndex) {
         List<WebElement> elements;
         WebElement element = null;
         try {
-            elements = driver.findElements(By.xpath("(//div[@class='ht_master handsontable']//tbody/tr)[1]/td"));
-            element = elements.get(elementIndex);
+                elements =driver.findElements(By.xpath("(//div[@class='ht_master handsontable']//tbody/tr)[1]/td"));
+                element = elements.get(elementIndex);
         } catch (Exception e) {
 
         }
         return element;
     }
 
-    public WebElement rowForInput(String elementName, Integer elementIndex) {
+    public WebElement rowForInput(Integer elementIndex) {
         List<WebElement> elements = driver.findElements(By.xpath("//div[@class='ht_master handsontable']//tbody//td"));
         WebElement element = elements.get(elementIndex);
         return element;
@@ -47,6 +47,10 @@ public class CommonWebElements extends BrowserExtensions{
     }
     public List<WebElement> clockNumbers2() {
         return driver.findElements(By.cssSelector("div:contains(flip-counter clock flip-clock-wrapper)"));
+    }
+
+    public WebElement spinner(){
+       return driver.findElement(By.className("loading-spinner"));
     }
 
 

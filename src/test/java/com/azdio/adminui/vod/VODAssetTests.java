@@ -10,6 +10,7 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 
 import org.junit.runners.MethodSorters;
+import org.springframework.test.annotation.Repeat;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class VODAssetTests extends BrowserExtensions {
@@ -29,6 +30,7 @@ public class VODAssetTests extends BrowserExtensions {
     }
 
     @Test
+    @Repeat(3)
     public void v01crateVODAsset() {
 
         // Navigation to the page
@@ -126,6 +128,7 @@ public class VODAssetTests extends BrowserExtensions {
         String idBefore = commonHelperMethods.getGridPropety("Id");
         commonHelperMethods.ToolbarButtonClick("Delete VOD Assets");
         commonHelperMethods.confirmDelete("Yes");
+        waitForSpinner();
         // Pos-delete
         Integer after = commonHelperMethods.numberOfGridRows();
         String idAfter = commonHelperMethods.getGridPropety("Id");

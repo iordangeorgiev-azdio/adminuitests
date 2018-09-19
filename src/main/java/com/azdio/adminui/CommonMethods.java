@@ -72,7 +72,7 @@ public class CommonMethods extends BrowserExtensions {
     }
 
     public void fillRowInfo(String elementName, String data) {
-        WebElement element = elements.rowForInput(elementName, getElementIndex(elementName));
+        WebElement element = elements.rowForInput(getElementIndex(elementName));
         waitToBeClickable(element);
         element.click();
 
@@ -141,7 +141,7 @@ public class CommonMethods extends BrowserExtensions {
     }
 
     public void openDropdown(String rowName) {
-        WebElement parentRow = elements.rowForInput(rowName, getElementIndex(rowName));
+        WebElement parentRow = elements.rowForInput(getElementIndex(rowName));
         waitToBeClickable(parentRow);
         parentRow.click();
         WebElement arrow = parentRow.findElement(elements.dropdownArrow());
@@ -156,7 +156,7 @@ public class CommonMethods extends BrowserExtensions {
 
     private void openCalendar(String fieldName) {
         // Open calendar
-        WebElement element = elements.rowForInput(fieldName, getElementIndex(fieldName));
+        WebElement element = elements.rowForInput(getElementIndex(fieldName));
         waitToBeClickable(element);
         element.click();
         WebElement button = element.findElement(By.xpath("//app-ultimate"));
@@ -191,14 +191,14 @@ public class CommonMethods extends BrowserExtensions {
 
     // Verify methods
     public void verifyCreatedItem(String property) {
-        String value = elements.rowForInput(property, getElementIndex(property)).getText();
+        String value = elements.rowForInput(getElementIndex(property)).getText();
 
         Assert.assertTrue(!value.equals(""));
     }
 
     public void verifyEditedItem() {
-        String updateOnDate = elements.rowForInput("Updated On", getElementIndex("Updated On")).getText();
-        String updatedBy = elements.rowForInput("Updated By", getElementIndex("Updated By")).getText();
+        String updateOnDate = elements.rowForInput(getElementIndex("Updated On")).getText();
+        String updatedBy = elements.rowForInput(getElementIndex("Updated By")).getText();
         updateOnDate = updateOnDate.substring(0, updateOnDate.length() - 3);
         String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(Calendar.getInstance().getTime());
         Assert.assertTrue(updateOnDate.equals(timeStamp));
@@ -224,9 +224,9 @@ public class CommonMethods extends BrowserExtensions {
     public String getGridPropety(String property) {
         String propertyText = "";
         try {
-            propertyText = elements.gridFirstRow(property, getElementIndex(property)).getText();
+            propertyText = elements.gridFirstRow(getGridIndex(property)).getText();
         } catch (Exception e) {
-
+            return "no elements";
         }
         return propertyText;
     }
@@ -234,18 +234,15 @@ public class CommonMethods extends BrowserExtensions {
     public Integer numberOfGridRows() {
 
         List<WebElement> elements = null;
-        Integer size = 0;
 
         try {
-            sleep(2000);
+            Thread.sleep(2000);
             elements = driver.findElements(By.xpath("//div[@class='ht_master handsontable']//tbody/tr"));
         } catch (Exception e) {
+            return 0;
+        }
 
-        }
-        if (!elements.contains(null)) {
-            size = elements.size();
-        }
-        return size;
+        return elements.size();
     }
 
     private Integer getElementIndex(String elementName) {
@@ -260,5 +257,26 @@ public class CommonMethods extends BrowserExtensions {
         }
         return elementIndex;
     }
+
+
+    private Integer getGridIndex(String elementName) {
+
+        Integer elementIndex = 0;
+        List<WebElement> elements = null;
+        try {
+            elements = driver.findElements(By.xpath("//div[@class='ht_clone_top handsontable']//span[@class='colHeader']"));
+            for (int i = 0; i < elements.size(); i++) {
+                if (elements.get(i).getText().equals(elementName)) {
+                    elementIndex = i;
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            return 0;
+        }
+
+        return elementIndex;
+    }
+
 
 }
