@@ -40,7 +40,7 @@ public class BrowserExtensions extends PageBase {
     public void waitForSpinner(){
         CommonWebElements elements = new CommonWebElements();
         String att = elements.spinner().getAttribute("style");
-        while(elements.spinner().getAttribute("style").equals("block")){
+        while(elements.spinner().getAttribute("style").contains("block")){
             try {
                 Thread.sleep(50);
             } catch (Exception e2) {

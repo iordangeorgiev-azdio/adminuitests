@@ -24,7 +24,7 @@ public class ChannelPackageTests extends BrowserExtensions {
         driver.get(url);
         commonHelperMethods.login(username, password);
     }
-    @Test
+   // @Test
     public void cp01crеateChannelPackage() {
 
         // Navigation to the page
@@ -44,7 +44,7 @@ public class ChannelPackageTests extends BrowserExtensions {
 
         driver.close();
     }
-    @Test
+   // @Test
     public void cp02editChannelPackage() {
 
         // Navigation to the page
@@ -67,7 +67,7 @@ public class ChannelPackageTests extends BrowserExtensions {
 
         driver.close();
     }
-    @Test
+   // @Test
     public void cp03deleteChannelPackage() {
 
         // Navigation to the page
@@ -80,12 +80,12 @@ public class ChannelPackageTests extends BrowserExtensions {
         commonHelperMethods.ToolbarButtonClick("Search");
         // Pre-delete
         Integer before = commonHelperMethods.numberOfGridRows();
-        String idBefore = commonHelperMethods.getGridPropety("Id");
+        String idBefore = commonHelperMethods.getGridPropety("Id",1);
         commonHelperMethods.ToolbarButtonClick("Delete Product");
         commonHelperMethods.confirmDelete("Yes");
         // Pos-delete
         Integer after = commonHelperMethods.numberOfGridRows();
-        String idAfter = commonHelperMethods.getGridPropety("Id");
+        String idAfter = commonHelperMethods.getGridPropety("Id",1);
         commonHelperMethods.verifyIsDelete(before, after, idBefore, idAfter);
 
         driver.close();

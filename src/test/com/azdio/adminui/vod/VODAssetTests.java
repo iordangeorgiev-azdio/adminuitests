@@ -83,6 +83,7 @@ public class VODAssetTests extends BrowserExtensions {
         commonHelperMethods.ToolbarButtonClick("Save");
 
         // Verify saved item by given property
+        waitForSpinner();
         commonHelperMethods.verifyCreatedItem("id");
 
         driver.close();
@@ -125,13 +126,13 @@ public class VODAssetTests extends BrowserExtensions {
         commonHelperMethods.ToolbarButtonClick("Search");
         // Pre-delete
         Integer before = commonHelperMethods.numberOfGridRows();
-        String idBefore = commonHelperMethods.getGridPropety("Id");
+        String idBefore = commonHelperMethods.getGridPropety("Id",1);
         commonHelperMethods.ToolbarButtonClick("Delete VOD Assets");
         commonHelperMethods.confirmDelete("Yes");
         waitForSpinner();
         // Pos-delete
         Integer after = commonHelperMethods.numberOfGridRows();
-        String idAfter = commonHelperMethods.getGridPropety("Id");
+        String idAfter = commonHelperMethods.getGridPropety("Id",1);
         commonHelperMethods.verifyIsDelete(before, after, idBefore, idAfter);
 
         driver.close();

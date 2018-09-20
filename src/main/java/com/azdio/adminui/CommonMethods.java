@@ -9,6 +9,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 
 import static java.lang.Thread.sleep;
 
@@ -29,8 +30,7 @@ public class CommonMethods extends BrowserExtensions {
 
     public void PopUpMenuSelecting(String panelName) {
         WebElement element = driver.findElement(By.xpath(".//button[contains(text(),'" + panelName + "')]"));
-        waitToBeClickable(element);
-        element.click();
+        waitAndClick(element);
     }
 
     public void ToolbarButtonClick(String buttonName) {
@@ -42,16 +42,14 @@ public class CommonMethods extends BrowserExtensions {
             e.printStackTrace();
         }
         WebElement button = driver.findElement(By.xpath("//*[@aria-describedby='" + buttonAttribute + "']"));
-        waitToBeClickable(button);
-        button.click();
+        waitAndClick(button);
         waitForPageLoaded();
     }
 
     // Edit methods
     public void selectPropertyForSearching(String propertyName) {
         WebElement openSearchDropdownButton = driver.findElement(By.xpath("(//*[contains(@class, 'mat-expansion-indicator ng')])[1]"));
-        waitToBeClickable(openSearchDropdownButton);
-        openSearchDropdownButton.click();
+        waitAndClick(openSearchDropdownButton);
         try {
             sleep(200);
         } catch (InterruptedException e) {
@@ -73,8 +71,7 @@ public class CommonMethods extends BrowserExtensions {
 
     public void fillRowInfo(String elementName, String data) {
         WebElement element = elements.rowForInput(getElementIndex(elementName));
-        waitToBeClickable(element);
-        element.click();
+        waitAndClick(element);
 
         // Check if the field is readonly or not by the class attribute
         if (!element.getAttribute("class").contains("htDimmed")) {
@@ -115,8 +112,7 @@ public class CommonMethods extends BrowserExtensions {
         for (int i = 0; i < list.size(); i++) {
             String eleText = list.get(i).getText();
             if (eleText.equals(values)) {
-                waitToBeClickable(list.get(i));
-                list.get(i).click();
+                waitAndClick(list.get(i));
                 break;
             }
         }
@@ -131,8 +127,7 @@ public class CommonMethods extends BrowserExtensions {
             for (int i = 0; i < list.size(); i++) {
                 String eleText = list.get(i).getText();
                 if (eleText.equals(values.get(t))) {
-                    waitToBeClickable(list.get(i));
-                    list.get(i).click();
+                    waitAndClick(list.get(i));
                     list = driver.findElements(elements.dropdownElements());
                     break;
                 }
@@ -140,13 +135,32 @@ public class CommonMethods extends BrowserExtensions {
         }
     }
 
+    public void selectRowForEditDelete(String seasonName){
+        getGridCellIndex("Name");
+    }
+
+    private void waitAndClick(WebElement element) {
+        waitToBeClickable(element);
+        element.click();
+    }
+
     public void openDropdown(String rowName) {
         WebElement parentRow = elements.rowForInput(getElementIndex(rowName));
-        waitToBeClickable(parentRow);
-        parentRow.click();
+        waitAndClick(parentRow);
+
         WebElement arrow = parentRow.findElement(elements.dropdownArrow());
         waitToBeClickable(arrow);
         parentRow.findElement(elements.dropdownArrow()).click();
+    }
+
+    public void expandSeason(){
+        WebElement cell = elements.tvSeriesExpandCell();
+
+        Actions action = new Actions(driver);
+
+        action.moveToElement(cell).click().build().perform();
+        WebElement dropdown = elements.tvSeriesExpand();
+        waitAndClick(dropdown);
     }
 
     public void enterDate(String elementName, String date, String time) {
@@ -221,10 +235,10 @@ public class CommonMethods extends BrowserExtensions {
 
     // Helper string and integer methods
 
-    public String getGridPropety(String property) {
+    public String getGridPropety(String property, Integer rowNumber) {
         String propertyText = "";
         try {
-            propertyText = elements.gridFirstRow(getGridIndex(property)).getText();
+            propertyText = elements.gridRow(getGridCellIndex(property),rowNumber).getText();
         } catch (Exception e) {
             return "no elements";
         }
@@ -259,7 +273,7 @@ public class CommonMethods extends BrowserExtensions {
     }
 
 
-    private Integer getGridIndex(String elementName) {
+    private Integer getGridCellIndex(String elementName) {
 
         Integer elementIndex = 0;
         List<WebElement> elements = null;
