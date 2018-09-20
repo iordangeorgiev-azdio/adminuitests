@@ -159,16 +159,6 @@ public class CommonMethods extends BrowserExtensions {
         Actions action = new Actions(driver);
 
         action.moveToElement(cell).click().build().perform();
-
-
-       // waitAndClick(cell);
-        try {
-            Thread.sleep(300);
-        }
-        catch (Exception e){
-
-        }
-
         WebElement dropdown = elements.tvSeriesExpand();
         waitAndClick(dropdown);
     }

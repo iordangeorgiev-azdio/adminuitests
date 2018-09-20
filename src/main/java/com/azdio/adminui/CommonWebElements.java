@@ -58,7 +58,7 @@ public class CommonWebElements extends BrowserExtensions{
     }
 
     public WebElement tvSeriesExpand(){
-        return driver.findElement(By.xpath("(//*[contains(@class,'ht_nestingLevels')]//*[contains(@class,'ht_nestingButton')])[1]"));
+        return driver.findElement(By.xpath("//app-ultimate"));
     }
 
     public WebElement tvSeriesExpandCell() { return driver.findElement(By.xpath("//div[@class='ht_clone_left handsontable']//*[contains(@class,'ht_nestingLevels')]"));
